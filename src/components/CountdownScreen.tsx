@@ -37,7 +37,7 @@ const CountdownScreen = ({ targetDate, onComplete }: CountdownScreenProps) => {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%)" }}>
+    <div className="min-h-screen flex items-center justify-center relative" style={{ background: "linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%)" }}>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -77,6 +77,68 @@ const CountdownScreen = ({ targetDate, onComplete }: CountdownScreenProps) => {
           ))}
         </div>
       </motion.div>
+
+      {/* Floating Decorations */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Floating Hearts */}
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={`heart-${i}`}
+            initial={{ y: "110vh", x: Math.random() * 100 - 50, opacity: 0 }}
+            animate={{
+              y: "-10vh",
+              opacity: [0, 0.8, 0.8, 0],
+              rotate: [0, 10, -10, 0]
+            }}
+            transition={{
+              duration: 10 + Math.random() * 15, // Slower, smoother
+              repeat: Infinity,
+              delay: Math.random() * 15,
+              ease: "linear",
+              times: [0, 0.1, 0.9, 1] // Fade in 10%, stay 80%, fade out 10%
+            }}
+            className="absolute text-pink-400/40 blur-[0.5px]"
+            style={{
+              left: `${Math.random() * 100}%`,
+              fontSize: `${Math.random() * 24 + 12}px`
+            }}
+          >
+            ❤️
+          </motion.div>
+        ))}
+
+        {/* Soft Balloons */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={`balloon-${i}`}
+            initial={{ y: "110vh", opacity: 0 }}
+            animate={{ y: "-20vh", opacity: [0, 0.4, 0.4, 0] }}
+            transition={{
+              duration: 15 + Math.random() * 20,
+              repeat: Infinity,
+              delay: Math.random() * 10,
+              ease: "linear",
+              times: [0, 0.1, 0.9, 1]
+            }}
+            className="absolute w-14 h-20 rounded-full bg-pink-400 blur-sm"
+            style={{ left: `${5 + Math.random() * 90}%` }}
+          />
+        ))}
+
+        {/* Twinkling Stars */}
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={`star-${i}`}
+            animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1.2, 0.5] }} // Blinking stats are fine, but let's smooth them too
+            transition={{ duration: 3 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 2, ease: "easeInOut" }}
+            className="absolute w-1.5 h-1.5 bg-white rounded-full"
+            style={{ top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%` }}
+          />
+        ))}
+      </div>
+
+
+      {/* Debug button removed for production */}
     </div>
   );
 };
